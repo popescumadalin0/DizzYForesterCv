@@ -15,19 +15,18 @@ public class TokenService : ITokenService
         _config = config;
     }
 
-    public string GenerateToken(LoginModel user)
+    public string GenerateToken(LoginModel user, int durationMin)
     {
         var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config?["Auth0:Key"]!));
         var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
         var claims = new[]
         {
-            new Claim(ClaimTypes.NameIdentifier,user.UserName),
-            new Claim(ClaimTypes.Role, "Admin")
+            new Claim(ClaimTypes.NameIdentifier,user.UserName)
         };
         var token = new JwtSecurityToken(_config?["Auth0:Issuer"],
             _config?["Auth0:Audience"],
             claims,
-            expires: DateTime.Now.AddMinutes(1),
+            expires: DateTime.Now.AddMinutes(durationMin),
             signingCredentials: credentials);
 
 
@@ -40,7 +39,6 @@ public class TokenService : ITokenService
         var identity = simplePrinciple?.Identity as ClaimsIdentity;
 
         return identity is { IsAuthenticated: true };
-        // More validate to check whether username exists in system
     }
     public ClaimsPrincipal? GetPrincipal(string token)
     {
@@ -56,12 +54,28 @@ public class TokenService : ITokenService
             ValidateLifetime = true,
             ValidateIssuer = true,
             ValidateAudience = true,
+            ValidIssuer = _config?["Auth0:Issuer"],
+            ValidAudience = _config?["Auth0:Audience"],
             IssuerSigningKey = symmetricKey,
             ClockSkew = TimeSpan.Zero
         };
         var principal = tokenHandler.ValidateToken(token, validationParameters, out _);
 
         return principal;
+    }
+
+    public string GenerateName()
+    {
+        const int length = 10;
+        var random = new Random();
+        const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        var randomString = new string(Enumerable.Repeat(chars, length)
+            .Select(s => s[random.Next(s.Length)]).ToArray());
+
+        var code = Encoding.UTF8.GetBytes(randomString);
+        var base64String = Convert.ToBase64String(code);
+
+        return base64String;
     }
 }
 

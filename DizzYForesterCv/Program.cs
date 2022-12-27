@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Model.Database;
 using System.Text;
+using WebAPI.Repository;
 using WebAPI.Services;
 
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
@@ -42,6 +43,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateIssuer = true,
             ValidateAudience = true,
             ValidateLifetime = true,
+            ValidIssuer = builder.Configuration["Auth0:Issuer"],
+            ValidAudience = builder.Configuration["Auth0:Audience"],
             ValidateIssuerSigningKey = true,
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Auth0:Key"]!)),
             ClockSkew = TimeSpan.Zero
@@ -72,6 +75,7 @@ void AddScopedDependencies(IServiceCollection services)
 {
     services.AddScoped<IUoW, UoW>();
     services.AddScoped<ITokenService, TokenService>();
+    services.AddScoped<IUserRepository, UserRepository>();
 }
 void AddTransientDependencies(IServiceCollection services)
 {

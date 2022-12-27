@@ -33,11 +33,5 @@ namespace DizzYForesterCv.Controllers
             })
             .ToArray();
         }
-
-        [HttpPost]
-        public async Task<string> GetJwt()
-        {
-            return _tokenService.GenerateToken(new LoginModel() { UserName = "Eu", Password = "yees" });
-        }
     }
 }
