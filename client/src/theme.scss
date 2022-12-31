@@ -1,0 +1,115 @@
+@import '@angular/material/theming';
+@include mat-core();
+
+$black: #000000;
+$white: #ffffff;
+$custom-primary: #689F38;
+$custom-accent: #CDDC39;
+$custom-warn: #ff5722;
+
+$custom-brand-primary: (
+  50: '#edf3e7',
+  100: '#d2e2c3',
+  200: '#b4cf9c',
+  300: '#95bc74',
+  400: '#7fad56',
+  500: $custom-primary,
+  600: '#609732',
+  700: '#558d2b',
+  800: '#4b8324',
+  900: '#3a7217',
+  contrast: (
+    50: $black,
+    100: $black,
+    200: $black,
+    300: $black,
+    400: $white,
+    500: $white,
+    600: $white,
+    700: $white,
+    800: $white,
+    900: $white
+  )
+);
+
+$custom-brand-accent: (
+  50: '#f9fbe7',
+  100: '#f0f5c4',
+  200: '#e6ee9c',
+  300: '#dce774',
+  400: '#d5e157',
+  500: $custom-accent,
+  600: '#c8d833',
+  700: '#c1d32c',
+  800: '#bace24',
+  900: '#aec517',
+  contrast: (
+    50: $black,
+    100: $black,
+    200: $black,
+    300: $white,
+    400: $white,
+    500: $white,
+    600: $white,
+    700: $white,
+    800: $white,
+    900: $white
+  )
+);
+
+$custom-brand-warn: (
+  50: #fbe9e7,
+  100: #ffccbc,
+  200: #ffab91,
+  300: #ff8965,
+  400: #ff6f43,
+  500: $custom-warn,
+  600: #f4501e,
+  700: #e64919,
+  800: #d84215,
+  900: #bf350c,
+  contrast: (
+    50: $black,
+    100: $black,
+    200: $black,
+    300: $black,
+    400: $black,
+    500: $white,
+    600: $white,
+    700: $white,
+    800: $white,
+    900: $white
+  )
+);
+
+$app-primary:  mat-palette($custom-brand-primary);
+$app-accent: mat-palette($custom-brand-accent);
+$app-warn: mat-palette($custom-brand-warn);
+$brand-light-theme: mat-light-theme($app-primary, $app-accent, $app-warn);
+@include angular-material-theme($brand-light-theme);
+
+/* ======== angular material custom theme ======== */
+// $my-custom-primary: mat-palette($my-palette);
+// $my-custom-accent: mat-palette($mat-pink, 100, 500, A100);
+// $my-custom-warn: mat-palette($mat-lime);
+
+// // Light theme
+// //$my-custom-theme: mat-light-theme($my-custom-primary, $my-custom-accent, $my-custom-warn);
+
+// // Dark theme
+// $my-custom-theme: define-light-th eme($my-custom-primary, $my-custom-accent, $my-custom-warn);
+
+// // Main theme defination
+// @include angular-material-theme($my-custom-theme);
+
+
+// // Alternate Angular Material Theme
+// .my-alternate-theme {
+//   $my-alternate-primary: mat-palette($mat-red);
+//   $my-alternate-accent: mat-palette($mat-green, 400);
+//   $my-alternate-warn: mat-palette($mat-grey);
+
+//   $my-alternate-theme: mat-light-theme($my-alternate-primary, $my-alternate-accent, $my-alternate-warn);
+
+//   @include angular-material-theme($my-alternate-theme);
+// }

@@ -11,10 +11,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy(name: MyAllowSpecificOrigins,
+    options.AddPolicy(MyAllowSpecificOrigins,
         corsPolicyBuilder =>
         {
-            corsPolicyBuilder.WithOrigins("http://dizzy-forester-cv.com")
+            corsPolicyBuilder.WithOrigins()
                 .AllowAnyMethod()
                 .AllowAnyHeader();
         });

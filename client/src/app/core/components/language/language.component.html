@@ -1,0 +1,7 @@
+<form [formGroup]="formGroup" class="box-style">
+  <app-dropdown-input
+    placeholder="Languages"
+    [options]="languages"
+    [control]="formGroup.controls['formControl']">
+  </app-dropdown-input>
+</form>

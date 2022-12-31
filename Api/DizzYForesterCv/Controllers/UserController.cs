@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Model.Model;
 using WebAPI.Repository;
@@ -29,7 +30,7 @@ namespace WebAPI.Controllers
                 }
             };
         }
-
+        [EnableCors("_myAllowSpecificOrigins")]
         [HttpPost("loginUser")]
         public async Task<ActionResult<ResponseLoginModel>> LoginUser(LoginModel user)
         {

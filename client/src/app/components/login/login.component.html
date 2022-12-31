@@ -1,0 +1,21 @@
+<div
+  fxLayout="column"
+  fxLayoutAlign="center center"
+  style="position:relative; top:25%">
+  <mat-card class="card-content">
+    <app-text-input
+      placeholder="Username"
+      [control]="loginGroup.controls['usernameControl']"
+      typeInput="text"
+      inputStyle="width: 21vw;"
+      >
+    </app-text-input>
+    <app-text-input
+      placeholder="Password"
+      [control]="loginGroup.controls['passwordControl']"
+      typeInput="password"
+      inputStyle="width: 21vw;">
+    </app-text-input>
+    <button mat-button class="button-content" (click)="onLogin()">Login</button>
+  </mat-card>
+</div>

@@ -1,0 +1,8 @@
+<mat-form-field appearance="fill">
+  <mat-label>{{ placeholder | translate }}</mat-label>
+  <mat-select [formControl]="control">
+    <mat-option *ngFor="let option of options" [value]="option.index">
+      {{ option.value }}
+    </mat-option>
+  </mat-select>
+</mat-form-field>

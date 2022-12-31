@@ -1,0 +1,35 @@
+<div class="navigation-bar">
+  <nav mat-tab-nav-bar [tabPanel]="tabPanel">
+    <a
+      *ngFor="let link of navLinks"
+      mat-tab-link
+      #rla="routerLinkActive"
+      [active]="link.section == currentSection"
+      (click)="scrollTo(link.section)"
+      class="navigation-item"
+      routerLinkActive>
+      {{ link.label }}
+    </a>
+  </nav>
+  <mat-tab-nav-panel #tabPanel></mat-tab-nav-panel>
+</div>
+<div
+  id="parentDiv"
+  scrollSpy
+  [spiedTags]="['DIV']"
+  (sectionChange)="onSectionChange($event)"
+  class="content">
+  <div id="home" class="content-item">
+    <app-home-page></app-home-page>
+  </div>
+  <div id="skills">
+    <app-skills></app-skills>
+  </div>
+  <div id="projects">
+    <app-projects></app-projects>
+  </div>
+  <footer>
+  <app-language></app-language>
+</footer>
+</div>
+

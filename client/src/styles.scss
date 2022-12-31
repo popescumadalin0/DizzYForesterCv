@@ -1,1 +1,22 @@
-/* You can add global styles to this file, and also import other style files */
+body {
+   font-family: "Verdana", Sans-Serif;
+   height: 100vh;
+   width: 100vw;
+   margin: 0;
+   overflow-x: hidden;
+   overflow-y: hidden;
+}
+::-webkit-scrollbar {
+  width: 7px;
+}
+/* Track */
+::-webkit-scrollbar-track {//bara
+  box-shadow: inset 0 0 5px grey;
+  border-radius: 10px;
+  background: #00385D;
+}
+/* Handle */
+::-webkit-scrollbar-thumb {//rotita
+  background: #49688D;
+  border-radius: 10px;
+}
