@@ -17,7 +17,7 @@ export class HttpService {
   constructor(protected httpClient: HttpClient) {}
 
   get<T>(id: string | number, api: string): Observable<T> {
-    return this.httpClient.get<T>(this.APIUrl + '/' + api + +'/' + id);
+    return this.httpClient.get<T>(this.APIUrl + '/' + api + '/' + id);
   }
 
   post<T>(resource: T, api: string): Observable<any> {

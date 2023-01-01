@@ -13,6 +13,7 @@
   </nav>
   <mat-tab-nav-panel #tabPanel></mat-tab-nav-panel>
 </div>
+<button *ngIf="isLogged" (click)="onLogout()" mat-button class="button-content">Logout</button>
 <div
   id="parentDiv"
   scrollSpy

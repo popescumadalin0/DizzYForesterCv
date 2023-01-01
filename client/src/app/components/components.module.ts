@@ -9,14 +9,18 @@ import { SkillsComponent } from './skills/skills.component';
 import { NavbarContentComponent } from './navbar-content/navbar-content.component';
 import { ProjectsComponent } from './projects/projects.component';
 import { CoreModule } from '../core/core.module';
+import { BaseComponent } from './base/base.component';
 
 @NgModule({
-  declarations: [HomePageComponent, LoginComponent, SkillsComponent, NavbarContentComponent, ProjectsComponent],
-  imports: [ ComponentsRoutingModule,
-     CommonModule,
-     SharedModule,
-     CoreModule,
-    ],
+  declarations: [
+    HomePageComponent,
+    LoginComponent,
+    SkillsComponent,
+    NavbarContentComponent,
+    ProjectsComponent,
+    BaseComponent,
+  ],
+  imports: [ComponentsRoutingModule, CommonModule, SharedModule, CoreModule],
   providers: [],
   exports: [
     HomePageComponent,
@@ -24,7 +28,8 @@ import { CoreModule } from '../core/core.module';
     SkillsComponent,
     NavbarContentComponent,
     ProjectsComponent,
-    CoreModule
+    CoreModule,
+    BaseComponent,
   ],
 })
 export class ComponentsModule {}

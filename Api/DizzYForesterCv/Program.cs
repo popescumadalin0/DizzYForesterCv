@@ -6,15 +6,15 @@ using System.Text;
 using WebAPI.Repository;
 using WebAPI.Services;
 
-var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+const string myAllowSpecificOrigins = "_myAllowSpecificOrigins";
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy(MyAllowSpecificOrigins,
+    options.AddPolicy(myAllowSpecificOrigins,
         corsPolicyBuilder =>
         {
-            corsPolicyBuilder.WithOrigins()
+            corsPolicyBuilder.WithOrigins("http://localhost:4200")
                 .AllowAnyMethod()
                 .AllowAnyHeader();
         });
@@ -61,7 +61,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseCors(MyAllowSpecificOrigins);
+app.UseCors(myAllowSpecificOrigins);
 
 app.UseHttpsRedirection();
 

@@ -21,27 +21,28 @@ namespace WebAPI.Controllers
         public async Task<ActionResult<bool>> RegisterUser(User user)
         {
             var response = await _userRepository.AddUser(user);
-            return new JsonResult(response.Status)
+            return new JsonResult(response.Message)
             {
                 Value = new
                 {
                     Value = response.Data,
                     Message = response.Message
-                }
+                },
+                StatusCode = response.Status
             };
         }
-        [EnableCors("_myAllowSpecificOrigins")]
         [HttpPost("loginUser")]
         public async Task<ActionResult<ResponseLoginModel>> LoginUser(LoginModel user)
         {
             var response = await _userRepository.LoginUser(user);
-            return new JsonResult(response.Status)
+            return new JsonResult(response.Message)
             {
                 Value = new
                 {
                     Value = response.Data,
                     Message = response.Message
-                }
+                },
+                StatusCode = response.Status
             };
         }
     }

@@ -11,6 +11,7 @@ import { HttpService } from './services/http.service';
 import { TokenService } from './services/token.service';
 import { AuthService } from './services/auth.service';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
+import { AuthGuard } from './guards/auth.guard';
 
 @NgModule({
   declarations: [LanguageComponent, SpinnerComponent],
@@ -26,6 +27,7 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
     HttpService,
     TokenService,
     AuthService,
+    AuthGuard,
   ],
   exports: [LanguageComponent, SpinnerComponent],
 })

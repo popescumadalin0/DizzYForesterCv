@@ -28,19 +28,21 @@ namespace WebAPI.Controllers
                         {
                             Value = "Unauthorized",
                             Message = "You are not authenticated"
-                        }
+                        },
+                        StatusCode = StatusCodes.Status401Unauthorized
                     };
                 responseLoginModel.Token =
                     _tokenService.GenerateToken(new LoginModel() { UserName = responseLoginModel.UserName }, 1);
                 responseLoginModel.RefreshToken =
                     _tokenService.GenerateToken(new LoginModel() { UserName = _tokenService.GenerateName() }, 2);
-                return new JsonResult(StatusCodes.Status200OK)
+                return new JsonResult("")
                 {
                     Value = new
                     {
                         Value = responseLoginModel,
                         Message = ""
-                    }
+                    },
+                    StatusCode = StatusCodes.Status200OK
                 };
             }
             catch (Exception ex)
@@ -51,7 +53,8 @@ namespace WebAPI.Controllers
                     {
                         Value = "Unauthorized",
                         Message = ex.Message
-                    }
+                    },
+                    StatusCode = StatusCodes.Status401Unauthorized
                 };
             }
 

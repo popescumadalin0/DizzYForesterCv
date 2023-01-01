@@ -35,3 +35,12 @@ footer{
   .content{
     display: block;}
 }
+.button-content{
+  position: absolute;
+  border-radius: 2px;
+  color: white;
+  background-color: red;
+  float: right;
+  left: 96vw;
+  top: 8px;
+}

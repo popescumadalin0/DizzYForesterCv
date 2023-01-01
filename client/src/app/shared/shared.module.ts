@@ -49,6 +49,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import 'hammerjs';
 import { ScrollSpyDirective } from './directives/scroll-spy.directive';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -106,6 +107,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     MatCommonModule,
     ObserversModule,
     FlexLayoutModule,
+    ToastrModule.forRoot(),
   ],
   providers: [],
   exports: [
@@ -160,6 +162,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     MatDividerModule,
     ScrollSpyDirective,
     FlexLayoutModule,
+    ToastrModule
   ],
 })
 export class SharedModule {}

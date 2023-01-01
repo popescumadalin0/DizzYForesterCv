@@ -15,6 +15,7 @@ import { catchError, filter, switchMap, take } from 'rxjs/operators';
 import { TokenService } from '../services/token.service';
 import { AuthService } from '../services/auth.service';
 import { ResponseLoginModel } from 'src/app/models/api-models/ResponseLoginModel';
+import { ToastrService } from 'ngx-toastr';
 
 // const TOKEN_HEADER_KEY = 'Authorization';  // for Spring Boot back-end
 const TOKEN_HEADER_KEY = 'x-access-token'; // for Node.js Express back-end
@@ -28,7 +29,8 @@ export class AuthInterceptor implements HttpInterceptor {
 
   constructor(
     private tokenService: TokenService,
-    private authService: AuthService
+    private authService: AuthService,
+    private toastr: ToastrService
   ) {}
 
   intercept(
@@ -49,7 +51,8 @@ export class AuthInterceptor implements HttpInterceptor {
         ) {
           return this.handle401Error(authReq, next);
         }
-
+        this.toastr.error(error.error.message)
+        console.log(error)
         return throwError(error);
       })
     );
@@ -89,6 +92,7 @@ export class AuthInterceptor implements HttpInterceptor {
               this.isRefreshing = false;
 
               this.authService.signOut();
+              this.toastr.error(err.error.message);
               return throwError(err);
             })
           );

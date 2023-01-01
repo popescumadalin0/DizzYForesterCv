@@ -4,20 +4,25 @@ import {
   Router,
 } from '@angular/router';
 import { Location } from '@angular/common';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { BaseComponent } from '../base/base.component';
 
 @Component({
   selector: 'app-navbar-content',
   templateUrl: './navbar-content.component.html',
   styleUrls: ['./navbar-content.component.scss'],
 })
-export class NavbarContentComponent implements OnInit {
+export class NavbarContentComponent extends BaseComponent implements OnInit {
   currentSection = 'home';
   navLinks: any[];
   constructor(
     private _router: Router,
     private _route: ActivatedRoute,
-    private _location: Location
-  ) {}
+    private _location: Location,
+    private authService: AuthService
+  ) {
+    super(authService);
+  }
   ngOnInit() {
     this.navLinks = [
       {
@@ -45,5 +50,8 @@ export class NavbarContentComponent implements OnInit {
 
   scrollTo(section) {
     document.querySelector('#' + section).scrollIntoView();
+  }
+  onLogout(){
+    this.authService.signOut();
   }
 }
