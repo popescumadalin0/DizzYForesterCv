@@ -10,7 +10,8 @@ import { TokenService } from './token.service';
   providedIn: 'root',
 })
 export class AuthService {
-  public logged$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  private _logged = new BehaviorSubject<boolean>(this.isLogged());
+  public readonly logged$ = this._logged.asObservable();
 
   constructor(
     private httpService: HttpService,
@@ -23,15 +24,15 @@ export class AuthService {
       .post<LoginModel>(user, 'user/loginUser')
       .pipe(take(1))
       .subscribe(res => {
-        this.setLoggedEvent();
+        this.setLoggedEvent(true);
         this.saveUser(res);
         this.tokenService.saveToken(res.token);
         this.tokenService.saveRefreshToken(res.refreshToken);
         this.router.navigate(['/home']);
       });
   }
-  public setLoggedEvent() {
-    this.logged$.next(true);
+  public setLoggedEvent(value: boolean) {
+    this._logged.next(value);
   }
   public saveUser(user: any): void {
     window.sessionStorage.removeItem(Constants.USER_KEY);
@@ -48,7 +49,8 @@ export class AuthService {
   }
   public signOut(): void {
     window.sessionStorage.clear();
-    this.setLoggedEvent();
+    this.setLoggedEvent(false);
+    this.router.navigate(['/home']);
   }
   public isLogged() {
     if (this.getUser() != null) {

@@ -5,8 +5,8 @@ import {
   HttpEvent,
   HttpInterceptor,
 } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { finalize } from 'rxjs/operators';
+import { Observable, of, throwError } from 'rxjs';
+import { catchError, finalize, tap } from 'rxjs/operators';
 import { LoaderService } from '../services/loader.service';
 
 @Injectable()
@@ -16,11 +16,12 @@ export class LoadingInterceptor implements HttpInterceptor {
   constructor(private loadingService: LoaderService) {}
 
   intercept(
-    request: HttpRequest<unknown>,
+    request: HttpRequest<any>,
     next: HttpHandler
-  ): Observable<HttpEvent<unknown>> {
+  ): Observable<HttpEvent<any>> {
     this.totalRequests++;
     this.loadingService.setLoading(true);
+
     return next.handle(request).pipe(
       finalize(() => {
         this.totalRequests--;

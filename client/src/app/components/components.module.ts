@@ -18,7 +18,7 @@ import { BaseComponent } from './base/base.component';
     SkillsComponent,
     NavbarContentComponent,
     ProjectsComponent,
-    BaseComponent,
+
   ],
   imports: [ComponentsRoutingModule, CommonModule, SharedModule, CoreModule],
   providers: [],
@@ -29,7 +29,7 @@ import { BaseComponent } from './base/base.component';
     NavbarContentComponent,
     ProjectsComponent,
     CoreModule,
-    BaseComponent,
+    
   ],
 })
 export class ComponentsModule {}

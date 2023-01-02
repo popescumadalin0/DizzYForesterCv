@@ -1,8 +1,4 @@
-import {
-  HTTP_INTERCEPTORS,
-  HttpEvent,
-  HttpErrorResponse,
-} from '@angular/common/http';
+import { HttpEvent, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {
   HttpInterceptor,
@@ -10,15 +6,20 @@ import {
   HttpRequest,
 } from '@angular/common/http';
 
-import { BehaviorSubject, Observable, throwError } from 'rxjs';
-import { catchError, filter, switchMap, take } from 'rxjs/operators';
+import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
+import {
+  catchError,
+  filter,
+  finalize,
+  retry,
+  switchMap,
+  take,
+} from 'rxjs/operators';
 import { TokenService } from '../services/token.service';
 import { AuthService } from '../services/auth.service';
 import { ResponseLoginModel } from 'src/app/models/api-models/ResponseLoginModel';
 import { ToastrService } from 'ngx-toastr';
-
-// const TOKEN_HEADER_KEY = 'Authorization';  // for Spring Boot back-end
-const TOKEN_HEADER_KEY = 'x-access-token'; // for Node.js Express back-end
+import { Constants } from 'src/app/models/Constants';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
@@ -36,38 +37,41 @@ export class AuthInterceptor implements HttpInterceptor {
   intercept(
     req: HttpRequest<any>,
     next: HttpHandler
-  ): Observable<HttpEvent<Object>> {
+  ): Observable<HttpEvent<any>> {
     let authReq = req;
     const token = this.tokenService.getToken();
     if (token != null) {
       authReq = this.addTokenHeader(req, token);
     }
     return next.handle(authReq).pipe(
+      retry(0),
       catchError(error => {
         if (
           error instanceof HttpErrorResponse &&
-          !authReq.url.includes('auth/signin') &&
-          error.status === 401
+          !authReq.url.includes('sysadmin/login') &&
+          error.status === 401 &&
+          token
         ) {
-          return this.handle401Error(authReq, next);
+          return this.handle401Error(authReq, next, error);
         }
-        this.toastr.error(error.error.message)
-        console.log(error)
+        this.toastr.error(error.error.message);
         return throwError(error);
       })
     );
   }
 
-  private handle401Error(request: HttpRequest<any>, next: HttpHandler) {
+  private handle401Error(
+    request: HttpRequest<any>,
+    next: HttpHandler,
+    error: any
+  ) {
     if (!this.isRefreshing) {
       this.isRefreshing = true;
       this.refreshTokenSubject.next(null);
-
       const token = this.tokenService.getRefreshToken();
       const refreshToken = this.tokenService.getRefreshToken();
       const user = this.authService.getUser();
-
-      if (token)
+      if (token) {
         return this.tokenService
           .refreshToken(
             new ResponseLoginModel({
@@ -82,36 +86,37 @@ export class AuthInterceptor implements HttpInterceptor {
 
               this.tokenService.saveToken(token.token);
               this.tokenService.saveRefreshToken(token.refreshToken);
-              this.refreshTokenSubject.next(token.accessToken);
-
-              return next.handle(
-                this.addTokenHeader(request, token.accessToken)
-              );
+              this.refreshTokenSubject.next(token.token);
+              return next.handle(this.addTokenHeader(request, token.token));
             }),
             catchError(err => {
               this.isRefreshing = false;
-
+              console.log(err);
               this.authService.signOut();
               this.toastr.error(err.error.message);
               return throwError(err);
             })
           );
+      }
+    } else {
+      return throwError(error);
     }
 
     return this.refreshTokenSubject.pipe(
       filter(token => token !== null),
       take(1),
-      switchMap(token => next.handle(this.addTokenHeader(request, token)))
+      switchMap(token => {
+        return next.handle(this.addTokenHeader(request, token));
+      })
     );
   }
 
   private addTokenHeader(request: HttpRequest<any>, token: string) {
-    /* for Spring Boot back-end */
-    // return request.clone({ headers: request.headers.set(TOKEN_HEADER_KEY, 'Bearer ' + token) });
-
-    /* for Node.js Express back-end */
     return request.clone({
-      headers: request.headers.set(TOKEN_HEADER_KEY, token),
+      headers: request.headers.set(
+        Constants.TOKEN_HEADER_KEY,
+        'Bearer ' + token
+      ),
     });
   }
 }

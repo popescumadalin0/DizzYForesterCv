@@ -10,8 +10,9 @@ import { LoadingInterceptor } from './interceptors/loading.interceptor';
 import { HttpService } from './services/http.service';
 import { TokenService } from './services/token.service';
 import { AuthService } from './services/auth.service';
-import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { AuthGuard } from './guards/auth.guard';
+import { HomeService } from './services/home.service';
+import { AuthInterceptor } from './interceptors/auth.interceptor';
 
 @NgModule({
   declarations: [LanguageComponent, SpinnerComponent],
@@ -28,6 +29,7 @@ import { AuthGuard } from './guards/auth.guard';
     TokenService,
     AuthService,
     AuthGuard,
+    HomeService,
   ],
   exports: [LanguageComponent, SpinnerComponent],
 })

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthService } from 'src/app/core/services/auth.service';
+import { HomeService } from 'src/app/core/services/home.service';
 import { BaseComponent } from '../base/base.component';
 
 @Component({
@@ -8,7 +9,14 @@ import { BaseComponent } from '../base/base.component';
   styleUrls: ['./home-page.component.scss'],
 })
 export class HomePageComponent extends BaseComponent {
-  constructor(authService: AuthService) {
+  onInit() {
+  }
+  onDestroy() {
+  }
+  constructor(authService: AuthService,private homeService: HomeService) {
     super(authService);
+  }
+  onClick(){
+    this.homeService.onClick();
   }
 }

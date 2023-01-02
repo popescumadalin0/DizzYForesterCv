@@ -74,8 +74,8 @@ namespace WebAPI.Repository
             var logonUser = new ResponseLoginModel
             {
                 UserName = checkPassword.UserName,
-                Token = _tokenService.GenerateToken(user, 1),
-                RefreshToken = _tokenService.GenerateToken(new LoginModel() { UserName = refreshTokenName }, 2)
+                Token = _tokenService.GenerateToken(user, 60),
+                RefreshToken = _tokenService.GenerateToken(new LoginModel() { UserName = refreshTokenName }, 7200)
             };
 
             return new Response<ResponseLoginModel>

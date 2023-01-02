@@ -22,19 +22,19 @@ namespace WebAPI.Controllers
             try
             {
                 if (!_tokenService.ValidateToken(responseLoginModel.RefreshToken))
-                    return new JsonResult("You are not authenticated")
+                    return new JsonResult("Your session expired")
                     {
                         Value = new
                         {
-                            Value = "Unauthorized",
-                            Message = "You are not authenticated"
+                            Value = "",
+                            Message = "Your session expired"
                         },
                         StatusCode = StatusCodes.Status401Unauthorized
                     };
                 responseLoginModel.Token =
-                    _tokenService.GenerateToken(new LoginModel() { UserName = responseLoginModel.UserName }, 1);
+                    _tokenService.GenerateToken(new LoginModel() { UserName = responseLoginModel.UserName }, 60);
                 responseLoginModel.RefreshToken =
-                    _tokenService.GenerateToken(new LoginModel() { UserName = _tokenService.GenerateName() }, 2);
+                    _tokenService.GenerateToken(new LoginModel() { UserName = _tokenService.GenerateName() }, 7200);
                 return new JsonResult("")
                 {
                     Value = new
@@ -47,12 +47,12 @@ namespace WebAPI.Controllers
             }
             catch (Exception ex)
             {
-                return new JsonResult(ex.Message)
+                return new JsonResult("Your session expired")
                 {
                     Value = new
                     {
-                        Value = "Unauthorized",
-                        Message = ex.Message
+                        Value = ex.Message,
+                        Message = "Your session expired"
                     },
                     StatusCode = StatusCodes.Status401Unauthorized
                 };

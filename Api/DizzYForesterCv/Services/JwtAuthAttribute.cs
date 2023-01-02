@@ -19,13 +19,14 @@ public class JwtAuthAttribute : Attribute, IAuthorizationFilter
         }
         catch (Exception ex)
         {
-            context.Result = new JsonResult(ex.Message)
+            context.Result = new JsonResult("You are not authenticated")
             {
                 Value = new
                 {
-                    Value = "Unauthorized",
-                    Message = ex.Message
-                }
+                    Value = ex.Message,
+                    Message = "You are not authenticated"
+                },
+                StatusCode = StatusCodes.Status401Unauthorized
             };
         }
     }

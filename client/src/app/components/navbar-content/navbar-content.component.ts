@@ -13,17 +13,20 @@ import { BaseComponent } from '../base/base.component';
   styleUrls: ['./navbar-content.component.scss'],
 })
 export class NavbarContentComponent extends BaseComponent implements OnInit {
+  onDestroy() {
+    
+  }
   currentSection = 'home';
   navLinks: any[];
   constructor(
     private _router: Router,
     private _route: ActivatedRoute,
     private _location: Location,
-    private authService: AuthService
+    authService: AuthService
   ) {
     super(authService);
   }
-  ngOnInit() {
+   onInit() {
     this.navLinks = [
       {
         label: 'Home',
