@@ -1,5 +1,5 @@
 <div class="navigation-bar">
-  <nav mat-tab-nav-bar [tabPanel]="tabPanel">
+  <nav mat-tab-nav-bar [tabPanel]="tabPanel" color="#FFFFF">
     <a
       *ngFor="let link of navLinks"
       mat-tab-link
@@ -12,8 +12,14 @@
     </a>
   </nav>
   <mat-tab-nav-panel #tabPanel></mat-tab-nav-panel>
+  <button
+    *ngIf="isLogged"
+    (click)="onLogout()"
+    mat-button
+    class="button-content">
+    Logout
+  </button>
 </div>
-<button *ngIf="isLogged" (click)="onLogout()" mat-button class="button-content">Logout</button>
 <div
   id="parentDiv"
   scrollSpy
@@ -30,7 +36,6 @@
     <app-projects></app-projects>
   </div>
   <footer>
-  <app-language></app-language>
-</footer>
+    <app-language></app-language>
+  </footer>
 </div>
-

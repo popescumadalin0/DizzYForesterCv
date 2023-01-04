@@ -8,5 +8,6 @@ namespace WebAPI.Repository
         public Task<Response<bool>> UpdateUser(User user);
         public Task<Response<bool>> DeleteUser(int id);
         public Task<Response<ResponseLoginModel>> LoginUser(LoginModel user);
+        public Task<Response<List<User>>> GetAllUsers();
     }
 }

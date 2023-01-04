@@ -1,10 +1,13 @@
 .navigation-bar{
   display: flex;
-  background-color: white;
-  flex-direction: column;
+  //background-color: white;
+  flex-direction: row;
   align-items: center;
+  justify-content: center;
   width: 100vw;
   position: sticky;
+  box-shadow: 10px 1px 5px #000000;
+  color: white;
   top:0;
   box-sizing: border-box;
 }
@@ -18,8 +21,13 @@
   color: white;
   top:48px;
 }
-.navigation-item{
+:host ::ng-deep .navigation-item{
   max-width: fit-content;
+  color: white !important;
+}
+:host ::ng-deep a{
+  color: white !important;
+
 }
 footer{
   height: 100vh;
@@ -36,11 +44,20 @@ footer{
     display: block;}
 }
 .button-content{
-  position: absolute;
+  //position: absolute;
   border-radius: 2px;
   color: white;
   background-color: red;
-  float: right;
-  left: 96vw;
-  top: 8px;
+  box-shadow: 2px 2px 4px #000000;
+  //float: right;
+  //left: 96vw;
+  //top: 8px;
 }
+::ng-deep .mat-tab-list .mat-tab-labels .mat-tab-label-active {
+  color:red;
+  background-color: green;
+  }
+  ::ng-deep .mat-tab-list .mat-tab-labels {
+    color:blue;
+    background-color: yellow;
+    }

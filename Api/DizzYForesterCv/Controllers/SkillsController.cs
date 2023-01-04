@@ -7,18 +7,18 @@ namespace WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UserController : ControllerBase
+    public class SkillsController : ControllerBase
     {
-        private readonly IUserRepository _userRepository;
-        public UserController(IUserRepository userRepository)
+        private readonly ISkillsRepository _skillsRepository;
+        public SkillsController(ISkillsRepository skillsRepository)
         {
-            _userRepository = userRepository;
+            _skillsRepository = skillsRepository;
         }
-        [HttpPost("registerUser")]
+        [HttpPost("addSkill")]
         [JwtAuth]
-        public async Task<ActionResult<bool>> RegisterUser(User user)
+        public async Task<ActionResult<bool>> AddSkill(Skill skill)
         {
-            var response = await _userRepository.AddUser(user);
+            var response = await _skillsRepository.AddSkill(skill);
             return new JsonResult(response.Message)
             {
                 Value = new
@@ -29,10 +29,11 @@ namespace WebAPI.Controllers
                 StatusCode = response.Status
             };
         }
-        [HttpPost("loginUser")]
-        public async Task<ActionResult<ResponseLoginModel>> LoginUser(LoginModel user)
+        [HttpDelete("deleteSkill/{id}")]
+        [JwtAuth]
+        public async Task<ActionResult<bool>> DeleteSkill(int id)
         {
-            var response = await _userRepository.LoginUser(user);
+            var response = await _skillsRepository.DeleteSkill(id);
             return new JsonResult(response.Message)
             {
                 Value = new
@@ -43,11 +44,11 @@ namespace WebAPI.Controllers
                 StatusCode = response.Status
             };
         }
-        [HttpDelete("deleteUser/{id}")]
+        [HttpPut("updateSkill")]
         [JwtAuth]
-        public async Task<ActionResult<bool>> DeleteUser(int id)
+        public async Task<ActionResult<bool>> UpdateSkill(Skill skill)
         {
-            var response = await _userRepository.DeleteUser(id);
+            var response = await _skillsRepository.UpdateSkill(skill);
             return new JsonResult(response.Message)
             {
                 Value = new
@@ -58,26 +59,11 @@ namespace WebAPI.Controllers
                 StatusCode = response.Status
             };
         }
-        [HttpPut("updateUser")]
+        [HttpGet("getAllSkills")]
         [JwtAuth]
-        public async Task<ActionResult<bool>> UpdateUser(User user)
+        public async Task<ActionResult<List<Skill>>> GetAllSkills()
         {
-            var response = await _userRepository.UpdateUser(user);
-            return new JsonResult(response.Message)
-            {
-                Value = new
-                {
-                    Value = response.Data,
-                    Message = response.Message
-                },
-                StatusCode = response.Status
-            };
-        }
-        [HttpGet("getAllUsers")]
-        [JwtAuth]
-        public async Task<ActionResult<List<User>>> GetAllUsers()
-        {
-            var response = await _userRepository.GetAllUsers();
+            var response = await _skillsRepository.GetAllSkills();
             return new JsonResult(response.Message)
             {
                 Value = new

@@ -1,9 +1,9 @@
 ﻿using Model.Model;
 using System.Security.Claims;
 
-namespace WebAPI.Services
+namespace WebAPI.Repository
 {
-    public interface ITokenService
+    public interface ITokenRepository
     {
         public string GenerateToken(LoginModel user, int durationMin);
         public bool ValidateToken(string token);

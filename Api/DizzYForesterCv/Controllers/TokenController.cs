@@ -1,7 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Model.Model;
-using WebAPI.Services;
+using WebAPI.Repository;
 
 namespace WebAPI.Controllers
 {
@@ -9,9 +8,9 @@ namespace WebAPI.Controllers
     [ApiController]
     public class TokenController : ControllerBase
     {
-        private readonly ITokenService _tokenService;
+        private readonly ITokenRepository _tokenService;
 
-        public TokenController(ITokenService tokenService)
+        public TokenController(ITokenRepository tokenService)
         {
             _tokenService = tokenService;
         }

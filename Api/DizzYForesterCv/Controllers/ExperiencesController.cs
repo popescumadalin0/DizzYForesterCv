@@ -7,18 +7,18 @@ namespace WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UserController : ControllerBase
+    public class ExperiencesController : ControllerBase
     {
-        private readonly IUserRepository _userRepository;
-        public UserController(IUserRepository userRepository)
+        private readonly IExperiencesRepository _experiencesRepository;
+        public ExperiencesController(IExperiencesRepository experiencesRepository)
         {
-            _userRepository = userRepository;
+            _experiencesRepository = experiencesRepository;
         }
-        [HttpPost("registerUser")]
+        [HttpPost("addExperience")]
         [JwtAuth]
-        public async Task<ActionResult<bool>> RegisterUser(User user)
+        public async Task<ActionResult<bool>> AddExperience(Experience experience)
         {
-            var response = await _userRepository.AddUser(user);
+            var response = await _experiencesRepository.AddExperience(experience);
             return new JsonResult(response.Message)
             {
                 Value = new
@@ -29,10 +29,11 @@ namespace WebAPI.Controllers
                 StatusCode = response.Status
             };
         }
-        [HttpPost("loginUser")]
-        public async Task<ActionResult<ResponseLoginModel>> LoginUser(LoginModel user)
+        [HttpDelete("deleteExperience/{id}")]
+        [JwtAuth]
+        public async Task<ActionResult<bool>> DeleteExperience(int id)
         {
-            var response = await _userRepository.LoginUser(user);
+            var response = await _experiencesRepository.DeleteExperience(id);
             return new JsonResult(response.Message)
             {
                 Value = new
@@ -43,11 +44,11 @@ namespace WebAPI.Controllers
                 StatusCode = response.Status
             };
         }
-        [HttpDelete("deleteUser/{id}")]
+        [HttpPut("updateExperience")]
         [JwtAuth]
-        public async Task<ActionResult<bool>> DeleteUser(int id)
+        public async Task<ActionResult<bool>> UpdateExperience(Experience experience)
         {
-            var response = await _userRepository.DeleteUser(id);
+            var response = await _experiencesRepository.UpdateExperience(experience);
             return new JsonResult(response.Message)
             {
                 Value = new
@@ -58,26 +59,11 @@ namespace WebAPI.Controllers
                 StatusCode = response.Status
             };
         }
-        [HttpPut("updateUser")]
+        [HttpGet("getAllExperiences")]
         [JwtAuth]
-        public async Task<ActionResult<bool>> UpdateUser(User user)
+        public async Task<ActionResult<List<Experience>>> GetAllExperiences()
         {
-            var response = await _userRepository.UpdateUser(user);
-            return new JsonResult(response.Message)
-            {
-                Value = new
-                {
-                    Value = response.Data,
-                    Message = response.Message
-                },
-                StatusCode = response.Status
-            };
-        }
-        [HttpGet("getAllUsers")]
-        [JwtAuth]
-        public async Task<ActionResult<List<User>>> GetAllUsers()
-        {
-            var response = await _userRepository.GetAllUsers();
+            var response = await _experiencesRepository.GetAllExperiences();
             return new JsonResult(response.Message)
             {
                 Value = new

@@ -1,8 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import {
-  ActivatedRoute,
-  Router,
-} from '@angular/router';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { BaseComponent } from '../base/base.component';
@@ -11,11 +8,10 @@ import { BaseComponent } from '../base/base.component';
   selector: 'app-navbar-content',
   templateUrl: './navbar-content.component.html',
   styleUrls: ['./navbar-content.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class NavbarContentComponent extends BaseComponent implements OnInit {
-  onDestroy() {
-    
-  }
+  onDestroy() {}
   currentSection = 'home';
   navLinks: any[];
   constructor(
@@ -26,7 +22,7 @@ export class NavbarContentComponent extends BaseComponent implements OnInit {
   ) {
     super(authService);
   }
-   onInit() {
+  onInit() {
     this.navLinks = [
       {
         label: 'Home',
@@ -54,7 +50,7 @@ export class NavbarContentComponent extends BaseComponent implements OnInit {
   scrollTo(section) {
     document.querySelector('#' + section).scrollIntoView();
   }
-  onLogout(){
+  onLogout() {
     this.authService.signOut();
   }
 }

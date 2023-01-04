@@ -3,21 +3,21 @@
 
 $black: #000000;
 $white: #ffffff;
-$custom-primary: #689F38;
-$custom-accent: #CDDC39;
+$custom-primary: #787878;
+$custom-accent: #f185ff;
 $custom-warn: #ff5722;
 
 $custom-brand-primary: (
   50: '#edf3e7',
-  100: '#d2e2c3',
-  200: '#b4cf9c',
-  300: '#95bc74',
-  400: '#7fad56',
+  100: '#e3e3e3',
+  200: '#c7c7c7',
+  300: '#b5b5b5',
+  400: '#969696',
   500: $custom-primary,
-  600: '#609732',
-  700: '#558d2b',
-  800: '#4b8324',
-  900: '#3a7217',
+  600: '#6e6e6e',
+  700: '#5c5c5c',
+  800: '#4f4e4f',
+  900: '#3d3d3d',
   contrast: (
     50: $black,
     100: $black,
@@ -33,16 +33,16 @@ $custom-brand-primary: (
 );
 
 $custom-brand-accent: (
-  50: '#f9fbe7',
-  100: '#f0f5c4',
-  200: '#e6ee9c',
-  300: '#dce774',
-  400: '#d5e157',
+  50: '#f9ccff',
+  100: '#f8bdff',
+  200: '#f5b6fc',
+  300: '#f29ffc',
+  400: '#f499ff',
   500: $custom-accent,
-  600: '#c8d833',
-  700: '#c1d32c',
-  800: '#bace24',
-  900: '#aec517',
+  600: '#ef73ff',
+  700: '#ee66ff',
+  800: '#ed59ff',
+  900: '#e933ff',
   contrast: (
     50: $black,
     100: $black,
@@ -85,8 +85,14 @@ $custom-brand-warn: (
 $app-primary:  mat-palette($custom-brand-primary);
 $app-accent: mat-palette($custom-brand-accent);
 $app-warn: mat-palette($custom-brand-warn);
-$brand-light-theme: mat-light-theme($app-primary, $app-accent, $app-warn);
-@include angular-material-theme($brand-light-theme);
+$light-theme: mat-light-theme($app-primary, $app-accent, $app-warn);
+$dark-theme: mat-dark-theme($app-primary, $app-accent, $app-warn);
+//@include mat-button-theme($light-theme);
+//@include mat-input-theme($light-theme);
+//@include mat-tabs-theme($dark-theme);
+//@include mat-toolbar-theme($light-theme);
+@include angular-material-theme($light-theme);
+
 
 /* ======== angular material custom theme ======== */
 // $my-custom-primary: mat-palette($my-palette);

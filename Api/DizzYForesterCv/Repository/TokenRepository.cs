@@ -4,13 +4,13 @@ using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using Model.Model;
 
-namespace WebAPI.Services;
+namespace WebAPI.Repository;
 
-public class TokenService : ITokenService
+public class TokenRepository : ITokenRepository
 {
     private static IConfiguration? _config;
 
-    public TokenService(IConfiguration? config)
+    public TokenRepository(IConfiguration? config)
     {
         _config = config;
     }

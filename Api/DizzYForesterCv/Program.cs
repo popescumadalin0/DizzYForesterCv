@@ -4,7 +4,6 @@ using Microsoft.IdentityModel.Tokens;
 using Model.Database;
 using System.Text;
 using WebAPI.Repository;
-using WebAPI.Services;
 
 const string myAllowSpecificOrigins = "_myAllowSpecificOrigins";
 var builder = WebApplication.CreateBuilder(args);
@@ -74,8 +73,10 @@ app.Run();
 void AddScopedDependencies(IServiceCollection services)
 {
     services.AddScoped<IUoW, UoW>();
-    services.AddScoped<ITokenService, TokenService>();
+    services.AddScoped<ITokenRepository, TokenRepository>();
     services.AddScoped<IUserRepository, UserRepository>();
+    services.AddScoped<ISkillsRepository, SkillsRepository>();
+    services.AddScoped<IExperiencesRepository, ExperiencesRepository>();
 }
 void AddTransientDependencies(IServiceCollection services)
 {
